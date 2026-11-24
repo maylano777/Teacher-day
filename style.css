@@ -1,0 +1,641 @@
+/* Selamat Hari Guru - tampilan halaman (palet Biru embun) */
+
+/* ===== 1. Warna & tema (terang / gelap) ===== */
+:root {
+  --bg: #F6F8FA;
+  --ink: #2A3A48;
+  --muted: #5B6E7E;
+  --card: #FCFDFE;
+  --line: #D5E0E8;
+  --board: #DCE8F0;
+  --board2: #EEF3F7;
+  --chalk: #34536B;
+  --gold: #8F6A2E;
+  --yellow: #E4D0A0;
+  --blue: #A9C9DE;
+  --pink: #C4D0E0;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F1A22;
+    --ink: #E6EEF3;
+    --muted: #A8B8C4;
+    --card: #152330;
+    --line: #2A3B49;
+    --board: #1B2A36;
+    --board2: #202B3A;
+    --chalk: #E6EEF3;
+    --gold: #E0C48A;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0F1A22;
+  --ink: #E6EEF3;
+  --muted: #A8B8C4;
+  --card: #152330;
+  --line: #2A3B49;
+  --board: #1B2A36;
+  --board2: #202B3A;
+  --chalk: #E6EEF3;
+  --gold: #E0C48A;
+}
+
+html {
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+
+/* ===== 2. Dasar ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 1.1rem/1.75 Lora, Georgia, serif;
+}
+
+.hand {
+  font-family: Caveat, "Segoe Print", "Comic Sans MS", cursive;
+  font-weight: 700;
+}
+
+/* ===== 3. Papan (pembuka & penutup) ===== */
+.board {
+  background: linear-gradient(165deg, var(--board), var(--board2));
+  color: var(--chalk);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.hero {
+  min-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1.25rem;
+}
+
+canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(3.4rem, 15vw, 9rem);
+  line-height: .95;
+}
+
+.hero h1 .l2 {
+  display: block;
+  color: var(--gold);
+}
+
+.caret {
+  display: inline-block;
+  width: .06em;
+  height: .8em;
+  background: var(--chalk);
+  margin-left: .05em;
+  vertical-align: -.05em;
+  animation: bl 1s steps(1) infinite;
+}
+
+@keyframes bl {
+  50% {
+    opacity: 0;
+  }
+}
+
+.hero p {
+  max-width: 36ch;
+  margin: 1.6rem auto 0;
+  color: var(--muted);
+  opacity: 0;
+  transition: opacity 1.4s;
+}
+
+.date {
+  margin-top: 1rem;
+  color: var(--muted);
+  font-size: 1.7rem;
+  opacity: 0;
+  transition: opacity 1.4s .4s;
+}
+
+.on {
+  opacity: 1!important;
+}
+
+/* ===== 4. Bagian halaman ===== */
+section {
+  padding: 4.5rem 1.25rem;
+}
+
+.wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  position: relative;
+}
+
+h2 {
+  font-size: clamp(2.3rem, 7vw, 3.6rem);
+  margin: 0 0 .6rem;
+  line-height: 1.05;
+}
+
+/* ===== Dari seorang rekan ===== */
+.from {
+  max-width: 640px;
+  text-align: center;
+}
+
+.wide img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.who {
+  font-size: 1.15rem;
+  margin: .2rem 0 0;
+}
+
+.who b {
+  font-weight: 600;
+}
+
+.who span {
+  color: var(--muted);
+  display: block;
+  font-size: .95rem;
+}
+
+/* ===== Foto bersama ===== */
+.wide {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2A4258;
+  position: relative;
+  border: 5px solid var(--card);
+  outline: 2px dashed var(--line);
+  outline-offset: 6px;
+}
+
+.cap {
+  text-align: center;
+  color: var(--muted);
+  margin: 1.6rem 0 0;
+  font-style: italic;
+}
+
+.duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.8rem;
+}
+
+.duo .wide {
+  aspect-ratio: 4/3;
+}
+
+@media (max-width: 640px) {
+  .duo {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== 5. Puisi ===== */
+.poem {
+  background: var(--card);
+}
+
+.poem .wrap {
+  max-width: 640px;
+}
+
+.poem h2 {
+  text-align: center;
+}
+
+.poem .by {
+  text-align: center;
+  color: var(--muted);
+  margin: 0 0 3rem;
+  font-style: italic;
+}
+
+.st {
+  margin: 0 0 3rem;
+  padding-left: 1.3rem;
+  border-left: 4px solid var(--yellow);
+  font-size: 1.15rem;
+  line-height: 1.95;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 1.2s, transform 1.2s;
+}
+
+.st:nth-of-type(2n) {
+  border-color: var(--blue);
+}
+
+.st:nth-of-type(3n) {
+  border-color: var(--pink);
+}
+
+.st.in {
+  opacity: 1;
+  transform: none;
+}
+
+.st i {
+  display: block;
+}
+
+/* ===== 6. Tanda tangan & animasi guru mengajar ===== */
+.sign {
+  text-align: right;
+  font-size: 2.1rem;
+  margin-top: 1rem;
+}
+
+.signrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.signrow .sign {
+  margin: 0;
+  flex: 1 1 220px;
+}
+
+.scene {
+  width: min(100%, 300px);
+  flex: 0 1 300px;
+  height: auto;
+}
+
+.scene .ch {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.scene .c1 {
+  animation: w1 10s infinite;
+}
+
+.scene .c2 {
+  animation: w2 10s infinite;
+}
+
+.scene .c3 {
+  animation: w3 10s infinite;
+}
+
+.scene .c4 {
+  animation: w4 10s infinite;
+}
+
+.scene .arm {
+  transform-origin: 196px 94px;
+  animation: pt 3s ease-in-out infinite;
+}
+
+.scene .hd {
+  opacity: 0;
+  animation: hd 9s infinite;
+}
+
+.scene .fl {
+  animation: fl 3s ease-out infinite;
+}
+
+@keyframes w1 {
+  0% {
+    stroke-dashoffset: 1;
+  }
+
+  12%, 90% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+
+  96%, 100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes w2 {
+  0%, 14% {
+    stroke-dashoffset: 1;
+  }
+
+  26%, 90% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+
+  96%, 100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes w3 {
+  0%, 28% {
+    stroke-dashoffset: 1;
+  }
+
+  40%, 90% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+
+  96%, 100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes w4 {
+  0%, 42% {
+    stroke-dashoffset: 1;
+  }
+
+  54%, 90% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+
+  96%, 100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes pt {
+  0%, 100% {
+    transform: rotate(-6deg);
+  }
+
+  50% {
+    transform: rotate(10deg);
+  }
+}
+
+@keyframes hd {
+  0%, 6% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  12%, 28% {
+    opacity: 1;
+    transform: none;
+  }
+
+  34%, 100% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@keyframes fl {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+}
+
+/* ===== 7. Penutup ===== */
+.thanks {
+  padding: 5rem 1.25rem 6rem;
+}
+
+.thanks h2 {
+  color: var(--gold);
+}
+
+.thanks p {
+  max-width: 44ch;
+  margin: .4rem auto 2rem;
+  color: var(--muted);
+}
+
+.btn {
+  font: 700 1.6rem Caveat, cursive;
+  background: var(--yellow);
+  color: #2A4258;
+  border: 0;
+  border-radius: 999px;
+  padding: .55rem 1.8rem;
+  cursor: pointer;
+  transition: transform .15s;
+}
+
+.btn:active {
+  transform: scale(.95);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 4px;
+}
+
+/* ===== Footer ===== */
+footer {
+  text-align: center;
+  padding: 1.6rem 1rem;
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+.alt {
+  background: var(--card);
+}
+
+.placeholder {
+  font-size: 2.2rem;
+  padding: 1rem;
+  text-align: center;
+}
+
+.ok {
+  font-size: 1.8rem;
+  margin-top: 1.4rem;
+  color: var(--gold);
+  min-height: 2.4rem;
+}
+
+/* ===== 8. Pemutar lagu ===== */
+.player {
+  position: fixed;
+  right: 1rem;
+  bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: calc(100% - 2rem);
+  padding: 0.35rem 1rem 0.35rem 0.35rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  box-shadow: 0 4px 18px rgba(42, 58, 72, 0.18);
+}
+
+.player-btn {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: var(--chalk);
+  color: var(--card);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.player-btn:active {
+  transform: scale(0.94);
+}
+
+.player-btn:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+
+.player .ic-pause,
+.player.playing .ic-play {
+  display: none;
+}
+
+.player.playing .ic-pause {
+  display: block;
+}
+
+.player-title {
+  font-size: 1.3rem;
+  line-height: 1;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.player.off .player-btn {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.player.off .eq {
+  display: none;
+}
+
+/* batang kecil yang bergoyang saat lagu diputar */
+.eq {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 16px;
+}
+
+.eq i {
+  width: 3px;
+  height: 100%;
+  background: var(--gold);
+  transform-origin: bottom;
+  transform: scaleY(0.25);
+}
+
+.player.playing .eq i {
+  animation: eq 0.9s ease-in-out infinite;
+}
+
+.player.playing .eq i:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.player.playing .eq i:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes eq {
+  0%, 100% {
+    transform: scaleY(0.25);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+/* ===== Hormati pengguna yang mengurangi animasi ===== */
+@media (prefers-reduced-motion: reduce) {
+  .caret {
+    animation: none;
+  }
+
+  .hero p, .date, .st {
+    transition: none;
+  }
+
+  .st {
+    opacity: 1;
+    transform: none;
+  }
+
+  .scene * {
+    animation: none!important;
+  }
+
+  .scene .ch {
+    stroke-dashoffset: 0;
+  }
+
+  .scene .hd {
+    opacity: 1;
+  }
+
+  .player.playing .eq i {
+    animation: none;
+    transform: scaleY(0.7);
+  }
+}
